@@ -3,7 +3,9 @@ import { Document } from 'mongoose';
 
 type DocumentDoctor = Doctor & Document;
 
-@Schema()
+@Schema({
+   timestamps: true,
+})
 class Doctor {
    @Prop()
    code: string;
@@ -22,6 +24,9 @@ class Doctor {
 
    @Prop()
    specialty: string;
+
+   createdAt: Date;
+   updatedAt: Date;
 }
 
 const SchemaDoctor = SchemaFactory.createForClass(Doctor);

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Doctor, DocumentDoctor } from 'src/schemas';
+import _ from 'lodash';
 
 @Injectable()
 export class DoctorService {
@@ -58,14 +59,15 @@ export class DoctorService {
    }
 
    async update(id: string, input: More) {
-      const data = await this.doctorModel.updateOne(
-         {
-            _id: id,
-         },
-         input,
-      );
+      const data = await this.findOne(id);
 
-      return data;
+      for (const [key, value] of Object.entries(input)) {
+         if (value) {
+            data[key] = value;
+         }
+      }
+
+      return await data.save();
    }
 
    async delete(id: string) {
