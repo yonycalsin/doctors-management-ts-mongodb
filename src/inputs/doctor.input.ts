@@ -1,0 +1,3 @@
+class InputDoctorCreate {}
+
+export { InputDoctorCreate };
