@@ -14,14 +14,24 @@ export class DoctorController {
    constructor(private readonly doctorService: DoctorService) {}
 
    @Get()
-   async getDoctors(@Query('page') page: number, @Query('offset') offset) {
-      const data = this.doctorService.findAll(offset, page);
+   async getDoctors(
+      @Query('page') page: number,
+      @Query('limit') limit: number,
+      @Param('term') term: string,
+   ) {
+      const data = this.doctorService.findAll({
+         page,
+         limit,
+         term,
+      });
+
       return data;
    }
 
    @Get(':id')
    async getDoctor(@Param('id') id: string) {
       const data = this.doctorService.findOne(id);
+      return data;
    }
 
    @Post()

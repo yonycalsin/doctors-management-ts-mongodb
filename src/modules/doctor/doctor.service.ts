@@ -9,10 +9,18 @@ export class DoctorService {
       @InjectModel(Doctor.name) private doctorModel: Model<DocumentDoctor>,
    ) {}
 
-   async findAll(offset = 0, limit = 0) {
+   async findAll({ page = 1, limit = 15, term }) {
+      const skip = (page - 1) * limit;
+
+      let query: More = {};
+
+      if (term) {
+         query.firstName['$regex'] = term;
+      }
+
       const data = await this.doctorModel
-         .find({})
-         .skip(offset)
+         .find(query)
+         .skip(skip)
          .limit(limit)
          .exec();
 
