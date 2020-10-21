@@ -10,7 +10,8 @@ export class DoctorService {
    ) {}
 
    async findAll({ page = 1, limit = 15, term }) {
-      const skip = (page - 1) * limit;
+      const end = page * limit;
+      const start = end - limit;
 
       let query: More = {};
 
@@ -18,11 +19,26 @@ export class DoctorService {
          query.firstName['$regex'] = term;
       }
 
-      const data = await this.doctorModel
+      const total = await this.doctorModel.estimatedDocumentCount();
+
+      const items = await this.doctorModel
          .find(query)
-         .skip(skip)
+         .skip(start)
          .limit(limit)
          .exec();
+
+      const pages = Math.ceil(total / limit);
+
+      const data = {
+         items,
+         pagination: {
+            total,
+            page,
+            pages,
+            hasPrevPage: page - 1 >= 1 ? true : false,
+            hasNextPage: page + 1 <= pages ? true : false,
+         },
+      };
 
       return data;
    }
