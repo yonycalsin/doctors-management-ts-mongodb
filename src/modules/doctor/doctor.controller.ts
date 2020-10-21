@@ -17,11 +17,11 @@ export class DoctorController {
    async getDoctors(
       @Query('page') page: number,
       @Query('limit') limit: number,
-      @Param('term') term: string,
+      @Query('term') term: string,
    ) {
       const data = this.doctorService.findAll({
-         page,
-         limit,
+         page: page ? Number(page) : undefined,
+         limit: limit ? Number(limit) : undefined,
          term,
       });
 

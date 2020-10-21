@@ -16,10 +16,12 @@ export class DoctorService {
       let query: More = {};
 
       if (term) {
-         query.firstName['$regex'] = term;
+         query.firstName = {
+            $regex: term,
+         };
       }
 
-      const total = await this.doctorModel.estimatedDocumentCount();
+      const total = await this.doctorModel.countDocuments(query);
 
       const items = await this.doctorModel
          .find(query)
