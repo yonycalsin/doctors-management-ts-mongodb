@@ -1,4 +1,4 @@
-## Doctors Management Typescript Mysql
+## Doctors Management Typescript MongoDB
 
 ### Installation
 
