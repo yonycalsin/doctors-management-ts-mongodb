@@ -21,10 +21,10 @@ class Doctor extends Document {
    firstName: string;
 
    @Prop()
-   paternalSurname: string;
+   firstLastName: string;
 
    @Prop()
-   maternalSurname: string;
+   secondLastName: string;
 
    @Prop()
    specialty: string;
