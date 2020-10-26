@@ -6,7 +6,11 @@ type DocumentDoctor = Doctor & Document;
 @Schema({
    timestamps: true,
 })
-class Doctor {
+class Doctor extends Document {
+   get id() {
+      return this._id;
+   }
+
    @Prop()
    code: string;
 
@@ -30,5 +34,10 @@ class Doctor {
 }
 
 const SchemaDoctor = SchemaFactory.createForClass(Doctor);
+
+SchemaDoctor.virtual('id', {
+   localField: '_id',
+   justOne: true,
+});
 
 export { Doctor, SchemaDoctor, DocumentDoctor };
