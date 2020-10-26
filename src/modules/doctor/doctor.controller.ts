@@ -1,6 +1,7 @@
 import {
    Body,
    Controller,
+   Delete,
    Get,
    Param,
    Patch,
@@ -44,6 +45,19 @@ export class DoctorController {
    @Patch(':id')
    async updateDoctor(@Param('id') id: string, @Body() input: More) {
       const data = await this.doctorService.update(id, input);
+
+      return data;
+   }
+
+   @Delete(':id')
+   async deleteDoctor(@Param('id') id: string) {
+      const data = await this.doctorService.delete(id);
+      return data ? true : false;
+   }
+
+   @Delete()
+   async bulkDeleteDoctor(@Body() input: More) {
+      const data = await this.doctorService.bulkDelete(input?.ids ?? []);
 
       return data;
    }

@@ -77,4 +77,14 @@ export class DoctorService {
 
       return data?.ok;
    }
+
+   async bulkDelete(ids: string[]) {
+      const data = await this.doctorModel.deleteMany({
+         _id: {
+            $in: ids,
+         },
+      });
+
+      return data?.ok;
+   }
 }
